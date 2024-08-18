@@ -7,7 +7,10 @@ import asyncio
 
 
 class EmbeddingModel:
-    def __init__(self, embeddings_model_name: str = "text-embedding-3-small"):
+    def __init__(
+            self,
+            embeddings_model_name: str = "text-embedding-3-small"
+        ):
         load_dotenv()
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.async_client = AsyncOpenAI()
@@ -22,7 +25,8 @@ class EmbeddingModel:
 
     async def async_get_embeddings(self, list_of_text: List[str]) -> List[List[float]]:
         embedding_response = await self.async_client.embeddings.create(
-            input=list_of_text, model=self.embeddings_model_name
+            input=list_of_text,
+            model=self.embeddings_model_name
         )
 
         return [embeddings.embedding for embeddings in embedding_response.data]
